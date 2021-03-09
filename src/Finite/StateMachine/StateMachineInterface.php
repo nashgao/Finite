@@ -3,9 +3,11 @@
 namespace Finite\StateMachine;
 
 use Finite\Event\StateMachineDispatcher;
+use Finite\Exception\TransitionException;
 use Finite\State\Accessor\StateAccessorInterface;
 use Finite\State\StateInterface;
 use Finite\Transition\TransitionInterface;
+use InvalidArgumentException;
 
 /**
  * The Finite State Machine base Interface.
@@ -27,7 +29,7 @@ interface StateMachineInterface
      *
      * @return mixed
      */
-    public function apply($transitionName, array $parameters = array());
+    public function apply(string $transitionName, array $parameters = array());
 
     /**
      * Returns if the transition is applicable.
@@ -37,7 +39,7 @@ interface StateMachineInterface
      *
      * @return bool
      */
-    public function can($transition, array $parameters = array());
+    public function can($transition, array $parameters = array()): bool;
 
     /**
      * @param string|StateInterface $state
@@ -49,7 +51,7 @@ interface StateMachineInterface
      * @param string|null                $initialState
      * @param string|null                $finalState
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function addTransition($transition, $initialState = null, $finalState = null);
 
@@ -60,72 +62,52 @@ interface StateMachineInterface
      *
      * @return TransitionInterface
      *
-     * @throws \Finite\Exception\TransitionException
+     * @throws TransitionException
      */
-    public function getTransition($name);
+    public function getTransition(string $name): TransitionInterface;
 
     /**
      * @param string $name
      *
      * @return StateInterface
      *
-     * @throws \Finite\Exception\TransitionException
+     * @throws TransitionException
      */
-    public function getState($name);
+    public function getState(string $name): StateInterface;
 
     /**
      * Returns an array containing all the transitions names.
-     *
-     * @return array<string>
      */
-    public function getTransitions();
+    public function getTransitions(): array;
 
     /**
      * Returns an array containing all the states names.
-     *
-     * @return array<string>
      */
-    public function getStates();
+    public function getStates(): array;
 
-    /**
-     * @param object $object
-     */
-    public function setObject($object);
 
-    /**
-     * @return object
-     */
-    public function getObject();
+    public function setObject(object $object);
 
-    /**
-     * @return StateInterface
-     */
-    public function getCurrentState();
 
-    /**
-     * @return StateMachineDispatcher
-     */
-    public function getDispatcher();
+    public function getObject(): object;
 
-    /**
-     * @param StateAccessorInterface $stateAccessor
-     */
+
+    public function getCurrentState(): StateInterface;
+
+
+    public function getDispatcher(): StateMachineDispatcher;
+
+
     public function setStateAccessor(StateAccessorInterface $stateAccessor);
 
-    /**
-     * @return bool
-     */
-    public function hasStateAccessor();
 
-    /**
-     * @param string $graph
-     */
+    public function hasStateAccessor(): bool;
+
+
     public function setGraph($graph);
 
-    /**
-     * @return string
-     */
-    public function getGraph();
+
+    public function getGraph(): string;
 
     /**
      * Find a state which have a given property, with an optional given value.
@@ -134,7 +116,7 @@ interface StateMachineInterface
      * @param string $property
      * @param mixed  $value
      *
-     * @return bool
+     * @return array
      */
-    public function findStateWithProperty($property, $value = null);
+    public function findStateWithProperty(string $property, $value = null): array;
 }

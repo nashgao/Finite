@@ -28,9 +28,7 @@ class SecurityAwareStateMachine extends StateMachine
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function can($transition, array $parameters = array())
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
