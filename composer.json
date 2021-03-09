@@ -34,7 +34,9 @@
         "symfony/security": "Needed for using SecurityAwareStateMachine"
     },
     "autoload": {
-        "psr-0": { "Finite": "src/" }
+        "psr-4": {
+            "Finite\\": "src/"
+        }
     },
     "config": {
         "bin-dir":"bin"
