@@ -7,6 +7,7 @@ class Document implements Finite\StatefulInterface
 {
     private ?string $state;
 
+
     public function getFiniteState(): ?string
     {
         return $this->state ?? null;
@@ -73,25 +74,25 @@ $loader       = new Finite\Loader\ArrayLoader(array(
 $loader->load($stateMachine);
 $stateMachine->initialize();
 
-//$stateMachine->getDispatcher()->addListener(\Finite\Event\FiniteEvents::PRE_TRANSITION, function(\Finite\Event\TransitionEvent $e) {
-//    echo 'This is a pre transition', "\n";
-//});
-//
-//$foobar = 42;
-//$stateMachine->getDispatcher()->addListener(
-//    \Finite\Event\FiniteEvents::POST_TRANSITION,
-//    \Finite\Event\Callback\CallbackBuilder::create($stateMachine)
-//        ->setCallable(function () use ($foobar) {
-//            echo "\$foobar is ${foobar} and this is a post transition\n";
-//        })
-//        ->getCallback()
-//);
+$stateMachine->getDispatcher()->addListener(\Finite\Event\FiniteEvents::PRE_TRANSITION, function(\Finite\Event\TransitionEvent $e) {
+    echo 'This is a pre transition', "\n";
+});
+
+$foobar = 42;
+$stateMachine->getDispatcher()->addListener(
+    \Finite\Event\FiniteEvents::POST_TRANSITION,
+    \Finite\Event\Callback\CallbackBuilder::create($stateMachine)
+        ->setCallable(function () use ($foobar) {
+            echo "\$foobar is ${foobar} and this is a post transition\n";
+        })
+        ->getCallback()
+);
 
 try {
     $stateMachine->apply('propose');
 } catch (\Throwable $throwable) {
-    var_dump($throwable);
+    var_dump($throwable->getMessage());
 }
-//$stateMachine->apply('reject');
-//$stateMachine->apply('propose');
-//$stateMachine->apply('accept');
+$stateMachine->apply('reject');
+$stateMachine->apply('propose');
+$stateMachine->apply('accept');

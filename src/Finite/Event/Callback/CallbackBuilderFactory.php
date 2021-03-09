@@ -12,7 +12,7 @@ use Finite\StateMachine\StateMachineInterface;
 class CallbackBuilderFactory implements CallbackBuilderFactoryInterface
 {
 
-    public function createBuilder(StateMachineInterface $stateMachine)
+    public function createBuilder(StateMachineInterface $stateMachine): CallbackBuilder
     {
         return CallbackBuilder::create($stateMachine);
     }
