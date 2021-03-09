@@ -5,14 +5,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Implement your document class
 class Document implements Finite\StatefulInterface
 {
-    private $state;
+    private ?string $state;
 
-    public function getFiniteState():string
+    public function getFiniteState(): ?string
     {
-        return $this->state;
+        return $this->state ?? null;
     }
 
-    public function setFiniteState($state)
+    public function setFiniteState(string $state)
     {
         $this->state = $state;
     }
@@ -87,7 +87,11 @@ $stateMachine->initialize();
 //        ->getCallback()
 //);
 
-$stateMachine->apply('propose');
+try {
+    $stateMachine->apply('propose');
+} catch (\Throwable $throwable) {
+    var_dump($throwable);
+}
 //$stateMachine->apply('reject');
 //$stateMachine->apply('propose');
 //$stateMachine->apply('accept');

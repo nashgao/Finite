@@ -35,7 +35,7 @@ class PropertyPathStateAccessor implements StateAccessorInterface
     }
 
 
-    public function getState($object): string
+    public function getState($object): ?string
     {
         try {
             return $this->propertyAccessor->getValue($object, $this->propertyPath);

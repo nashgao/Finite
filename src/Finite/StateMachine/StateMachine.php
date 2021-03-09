@@ -140,6 +140,12 @@ class StateMachine implements StateMachineInterface
     }
 
 
+    /**
+     * @param $transition
+     * @param array $parameters
+     * @return bool
+     * @throws Exception\TransitionException
+     */
     public function can($transition, array $parameters = array()): bool
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);

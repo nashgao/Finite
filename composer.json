@@ -31,9 +31,7 @@
 
     },
     "suggest": {
-        "pimple/pimple":    "Needed for use with PimpleFactory",
-        "symfony/security": "Needed for using SecurityAwareStateMachine",
-        "symfony/yaml":     "Yaml allows you to define your State graph in YAML"
+        "symfony/security": "Needed for using SecurityAwareStateMachine"
     },
     "autoload": {
         "psr-0": { "Finite": "src/" }

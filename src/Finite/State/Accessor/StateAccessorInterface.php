@@ -20,7 +20,7 @@ interface StateAccessorInterface
      *
      * @return string
      */
-    public function getState(object $object): string;
+    public function getState(object $object): ?string;
 
     /**
      * Set the state of the object to the given property path.

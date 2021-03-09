@@ -13,9 +13,9 @@ interface StatefulInterface
     /**
      * Gets the object state.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFiniteState(): string;
+    public function getFiniteState(): ?string;
 
     /**
      * Sets the object state.
