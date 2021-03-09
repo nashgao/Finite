@@ -7,7 +7,7 @@ class Document implements Finite\StatefulInterface
 {
     private $state;
 
-    public function getFiniteState()
+    public function getFiniteState():string
     {
         return $this->state;
     }

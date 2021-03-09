@@ -16,9 +16,9 @@ class State implements StateInterface
     /**
      * The state type.
      *
-     * @var int
+     * @var string
      */
-    protected int $type;
+    protected string $type;
 
     /**
      * The transition name.
