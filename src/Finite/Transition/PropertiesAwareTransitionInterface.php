@@ -1,6 +1,7 @@
 <?php
 
 namespace Finite\Transition;
+use Finite\Exception\TransitionException;
 use Finite\PropertiesAwareInterface;
 
 /**
@@ -18,7 +19,7 @@ interface PropertiesAwareTransitionInterface extends TransitionInterface, Proper
      *
      * @return array
      *
-     * @throws \Finite\Exception\TransitionException
+     * @throws TransitionException
      */
-    public function resolveProperties(array $properties);
+    public function resolveProperties(array $properties): array;
 }

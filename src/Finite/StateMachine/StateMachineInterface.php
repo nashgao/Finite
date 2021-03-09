@@ -104,7 +104,7 @@ interface StateMachineInterface
     public function hasStateAccessor(): bool;
 
 
-    public function setGraph($graph);
+    public function setGraph(string $graph);
 
 
     public function getGraph(): string;

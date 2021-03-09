@@ -12,7 +12,7 @@ class Callback implements CallbackInterface
     /**
      * @var CallbackSpecificationInterface
      */
-    private $specification;
+    private CallbackSpecificationInterface $specification;
 
     /**
      * @var callable
@@ -23,7 +23,7 @@ class Callback implements CallbackInterface
      * @param CallbackSpecificationInterface $callbackSpecification
      * @param callable                       $callable
      */
-    public function __construct(CallbackSpecificationInterface $callbackSpecification, $callable)
+    public function __construct(CallbackSpecificationInterface $callbackSpecification, callable $callable)
     {
         $this->specification = $callbackSpecification;
         $this->callable = $callable;
@@ -32,14 +32,12 @@ class Callback implements CallbackInterface
     /**
      * @return CallbackSpecificationInterface
      */
-    public function getSpecification()
+    public function getSpecification(): CallbackSpecificationInterface
     {
         return $this->specification;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function __invoke(TransitionEvent $event)
     {
         if ($this->specification->isSatisfiedBy($event)) {
@@ -47,10 +45,8 @@ class Callback implements CallbackInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function call($object, TransitionEvent $event)
+
+    protected function call($object, TransitionEvent $event): bool
     {
         return call_user_func($this->callable, $object, $event);
     }

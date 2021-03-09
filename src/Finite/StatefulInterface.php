@@ -15,12 +15,12 @@ interface StatefulInterface
      *
      * @return string
      */
-    public function getFiniteState();
+    public function getFiniteState(): string;
 
     /**
      * Sets the object state.
      *
      * @param string $state
      */
-    public function setFiniteState($state);
+    public function setFiniteState(string $state);
 }

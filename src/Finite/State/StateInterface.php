@@ -3,6 +3,7 @@
 namespace Finite\State;
 
 use Finite\PropertiesAwareInterface;
+use Finite\Transition\TransitionInterface;
 
 /**
  * The base State Interface.
@@ -22,14 +23,14 @@ interface StateInterface extends PropertiesAwareInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns if this state is the initial state.
      *
      * @return bool
      */
-    public function isInitial();
+    public function isInitial(): bool;
 
     /**
      * Returns if this state is the final state.
@@ -50,23 +51,23 @@ interface StateInterface extends PropertiesAwareInterface
      *
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * Returns the available transitions.
      *
      * @return array
      */
-    public function getTransitions();
+    public function getTransitions(): array;
 
     /**
      * Returns if this state can run $transition.
      *
-     * @param string|\Finite\Transition\TransitionInterface $transition
+     * @param string|TransitionInterface $transition
      *
      * @return bool
      *
      * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
      */
-    public function can($transition);
+    public function can($transition): bool;
 }

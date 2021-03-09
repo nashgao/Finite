@@ -19,7 +19,7 @@ class StateMachineEvent extends Event
     /**
      * @var StateMachine
      */
-    protected $stateMachine;
+    protected StateMachine $stateMachine;
 
     /**
      * @param StateMachine $stateMachine
@@ -32,7 +32,7 @@ class StateMachineEvent extends Event
     /**
      * @return StateMachine
      */
-    public function getStateMachine()
+    public function getStateMachine(): StateMachine
     {
         return $this->stateMachine;
     }

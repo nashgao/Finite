@@ -21,7 +21,7 @@ class StateMachineDispatcher
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher;
     }
 
-    public function dispatch($eventName, StateMachineEvent $event)
+    public function dispatch($eventName, StateMachineEvent $event): object
     {
         if (self::isUnder43()) {
             return $this->eventDispatcher->dispatch($eventName, $event);
@@ -35,7 +35,7 @@ class StateMachineDispatcher
         return $this->eventDispatcher->addListener($eventName, $listener, $priority);
     }
 
-    private static function isUnder43()
+    private static function isUnder43(): ?bool
     {
         static $result = null;
 

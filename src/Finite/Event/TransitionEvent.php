@@ -2,6 +2,7 @@
 
 namespace Finite\Event;
 
+use Finite\Exception\TransitionException;
 use Finite\State\StateInterface;
 use Finite\StateMachine\StateMachine;
 use Finite\Transition\PropertiesAwareTransitionInterface;
@@ -17,28 +18,29 @@ class TransitionEvent extends StateMachineEvent
     /**
      * @var TransitionInterface
      */
-    protected $transition;
+    protected TransitionInterface $transition;
 
     /**
      * @var bool
      */
-    protected $transitionRejected = false;
+    protected bool $transitionRejected = false;
 
     /**
      * @var StateInterface
      */
-    protected $initialState;
+    protected StateInterface $initialState;
 
     /**
      * @var array
      */
-    protected $properties;
+    protected array $properties;
 
     /**
-     * @param StateInterface      $initialState
+     * @param StateInterface $initialState
      * @param TransitionInterface $transition
-     * @param StateMachine        $stateMachine
-     * @param array               $properties
+     * @param StateMachine $stateMachine
+     * @param array $properties
+     * @throws TransitionException
      */
     public function __construct(
         StateInterface $initialState,
@@ -60,7 +62,7 @@ class TransitionEvent extends StateMachineEvent
     /**
      * @return TransitionInterface
      */
-    public function getTransition()
+    public function getTransition(): TransitionInterface
     {
         return $this->transition;
     }
@@ -68,7 +70,7 @@ class TransitionEvent extends StateMachineEvent
     /**
      * @return bool
      */
-    public function isRejected()
+    public function isRejected(): bool
     {
         return $this->transitionRejected;
     }
@@ -81,7 +83,7 @@ class TransitionEvent extends StateMachineEvent
     /**
      * @return StateInterface
      */
-    public function getInitialState()
+    public function getInitialState(): StateInterface
     {
         return $this->initialState;
     }
@@ -91,7 +93,7 @@ class TransitionEvent extends StateMachineEvent
      *
      * @return bool
      */
-    public function has($property)
+    public function has(string $property): bool
     {
         return array_key_exists($property, $this->properties);
     }
@@ -102,7 +104,7 @@ class TransitionEvent extends StateMachineEvent
      *
      * @return mixed
      */
-    public function get($property, $default = null)
+    public function get(string $property, $default = null)
     {
         return $this->has($property) ? $this->properties[$property] : $default;
     }
@@ -110,7 +112,7 @@ class TransitionEvent extends StateMachineEvent
     /**
      * @return array
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }

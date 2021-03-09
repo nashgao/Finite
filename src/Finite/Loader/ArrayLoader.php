@@ -23,22 +23,22 @@ class ArrayLoader implements LoaderInterface
     /**
      * @var array
      */
-    private $config;
+    private array $config;
 
     /**
-     * @var CallbackHandler
+     * @var CallbackHandler|null
      */
-    private $callbackHandler;
+    private ?CallbackHandler $callbackHandler;
 
     /**
-     * @var CallbackBuilderFactoryInterface
+     * @var CallbackBuilderFactoryInterface|null
      */
-    private $callbackBuilderFactory;
+    private ?CallbackBuilderFactoryInterface $callbackBuilderFactory;
 
     /**
-     * @param array                           $config
-     * @param CallbackHandler                 $handler
-     * @param CallbackBuilderFactoryInterface $callbackBuilderFactory
+     * @param array                                $config
+     * @param CallbackHandler|null                 $handler
+     * @param CallbackBuilderFactoryInterface|null $callbackBuilderFactory
      */
     public function __construct(array $config, CallbackHandler $handler = null, CallbackBuilderFactoryInterface $callbackBuilderFactory = null)
     {
@@ -56,9 +56,7 @@ class ArrayLoader implements LoaderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function load(StateMachineInterface $stateMachine)
     {
         if (null === $this->callbackHandler) {
@@ -81,9 +79,12 @@ class ArrayLoader implements LoaderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param $object
+     * @param string $graph
+     * @return bool
+     * @throws \ReflectionException
      */
-    public function supports($object, $graph = 'default')
+    public function supports(object $object, string $graph = 'default'): bool
     {
         $reflection = new \ReflectionClass($this->config['class']);
 
@@ -184,7 +185,7 @@ class ArrayLoader implements LoaderInterface
         }
     }
 
-    private function getCallbacksResolver()
+    private function getCallbacksResolver(): OptionsResolver
     {
         $resolver = new OptionsResolver();
 

@@ -17,16 +17,16 @@ class PropertyPathStateAccessor implements StateAccessorInterface
     /**
      * @var string
      */
-    private $propertyPath;
+    private string $propertyPath;
 
     /**
      * @var PropertyAccessorInterface
      */
-    private $propertyAccessor;
+    private PropertyAccessorInterface $propertyAccessor;
 
     /**
-     * @param string                    $propertyPath
-     * @param PropertyAccessorInterface $propertyAccessor
+     * @param string                         $propertyPath
+     * @param PropertyAccessorInterface|null $propertyAccessor
      */
     public function __construct($propertyPath = 'finiteState', PropertyAccessorInterface $propertyAccessor = null)
     {
@@ -34,10 +34,8 @@ class PropertyPathStateAccessor implements StateAccessorInterface
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getState($object)
+
+    public function getState($object): string
     {
         try {
             return $this->propertyAccessor->getValue($object, $this->propertyPath);
@@ -50,10 +48,8 @@ class PropertyPathStateAccessor implements StateAccessorInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setState(&$object, $value)
+
+    public function setState(object &$object, string $value)
     {
         try {
             $this->propertyAccessor->setValue($object, $this->propertyPath, $value);

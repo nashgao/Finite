@@ -14,22 +14,22 @@ class CallbackBuilder
     /**
      * @var StateMachineInterface
      */
-    private $stateMachine;
+    private StateMachineInterface $stateMachine;
 
     /**
      * @var array
      */
-    private $from;
+    private array $from;
 
     /**
      * @var array
      */
-    private $to;
+    private array $to;
 
     /**
      * @var array
      */
-    private $on;
+    private array $on;
 
     /**
      * @var callable
@@ -41,9 +41,9 @@ class CallbackBuilder
      * @param array                 $from
      * @param array                 $to
      * @param array                 $on
-     * @param callable              $callable
+     * @param callable|null         $callable
      */
-    public function __construct(StateMachineInterface $sm, array $from = array(), array $to = array(), array $on = array(), $callable = null)
+    public function __construct(StateMachineInterface $sm, array $from = array(), array $to = array(), array $on = array(), callable $callable = null)
     {
         $this->stateMachine = $sm;
         $this->from = $from;
@@ -57,7 +57,7 @@ class CallbackBuilder
      *
      * @return CallbackBuilder
      */
-    public function setFrom(array $from)
+    public function setFrom(array $from): CallbackBuilder
     {
         $this->from = $from;
 
@@ -69,7 +69,7 @@ class CallbackBuilder
      *
      * @return CallbackBuilder
      */
-    public function setTo(array $to)
+    public function setTo(array $to): CallbackBuilder
     {
         $this->to = $to;
 
@@ -81,7 +81,7 @@ class CallbackBuilder
      *
      * @return CallbackBuilder
      */
-    public function setOn(array $on)
+    public function setOn(array $on): CallbackBuilder
     {
         $this->on = $on;
 
@@ -93,7 +93,7 @@ class CallbackBuilder
      *
      * @return CallbackBuilder
      */
-    public function setCallable($callable)
+    public function setCallable(callable $callable): CallbackBuilder
     {
         $this->callable = $callable;
 
@@ -105,7 +105,7 @@ class CallbackBuilder
      *
      * @return CallbackBuilder
      */
-    public function addFrom($from)
+    public function addFrom(string $from): CallbackBuilder
     {
         $this->from[] = $from;
 
@@ -117,7 +117,7 @@ class CallbackBuilder
      *
      * @return CallbackBuilder
      */
-    public function addTo($to)
+    public function addTo(string $to): CallbackBuilder
     {
         $this->to[] = $to;
 
@@ -129,7 +129,7 @@ class CallbackBuilder
      *
      * @return CallbackBuilder
      */
-    public function addOn($on)
+    public function addOn(string $on): CallbackBuilder
     {
         $this->from[] = $on;
 
@@ -152,11 +152,11 @@ class CallbackBuilder
      * @param array                 $from
      * @param array                 $to
      * @param array                 $on
-     * @param callable              $callable
+     * @param callable|null         $callable
      *
      * @return CallbackBuilder
      */
-    public static function create(StateMachineInterface $sm, array $from = array(), array $to = array(), array $on = array(), $callable = null)
+    public static function create(StateMachineInterface $sm, array $from = array(), array $to = array(), array $on = array(), callable $callable = null): CallbackBuilder
     {
         return new self($sm, $from, $to, $on, $callable);
     }

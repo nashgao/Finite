@@ -2,6 +2,7 @@
 
 namespace Finite\StateMachine;
 
+use Finite\Exception\TransitionException;
 use Finite\Transition\TransitionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -18,7 +19,7 @@ class SecurityAwareStateMachine extends StateMachine
     /**
      * @var AuthorizationCheckerInterface
      */
-    protected $authorizationChecker;
+    protected AuthorizationCheckerInterface$authorizationChecker;
 
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
@@ -28,8 +29,13 @@ class SecurityAwareStateMachine extends StateMachine
         $this->authorizationChecker = $authorizationChecker;
     }
 
-
-    public function can($transition, array $parameters = array())
+    /**
+     * @param TransitionInterface|string $transition
+     * @param array $parameters
+     * @return bool
+     * @throws TransitionException
+     */
+    public function can($transition, array $parameters = array()): bool
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
 

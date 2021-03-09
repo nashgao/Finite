@@ -16,14 +16,14 @@ interface TransitionInterface
      *
      * @return array
      */
-    public function getInitialStates();
+    public function getInitialStates(): array;
 
     /**
      * Returns the state resulting of this transition.
      *
      * @return string
      */
-    public function getState();
+    public function getState(): string;
 
     /**
      * Process the transition.
@@ -39,12 +39,12 @@ interface TransitionInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns the closure. If closure execution returns false, transition cannot be applied.
      *
      * @return callable
      */
-    public function getGuard();
+    public function getGuard(): ?callable;
 }

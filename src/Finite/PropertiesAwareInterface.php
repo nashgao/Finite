@@ -5,7 +5,6 @@ namespace Finite;
 /**
  * Interface that all class that have properties must implements
  *
- * @author
  */
 interface PropertiesAwareInterface
 {
@@ -14,7 +13,7 @@ interface PropertiesAwareInterface
      *
      * @return bool
      */
-    public function has($property);
+    public function has(string $property): bool;
 
     /**
      * @param string $property
@@ -22,12 +21,12 @@ interface PropertiesAwareInterface
      *
      * @return mixed
      */
-    public function get($property, $default = null);
+    public function get(string $property, $default = null);
 
     /**
      * Returns optional state properties.
      *
      * @return array
      */
-    public function getProperties();
+    public function getProperties():array;
 }

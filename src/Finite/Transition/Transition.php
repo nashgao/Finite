@@ -21,40 +21,40 @@ class Transition implements PropertiesAwareTransitionInterface
     /**
      * @var array
      */
-    protected $initialStates;
-
-    /*
-     * @var string
-     */
-    protected $state;
+    protected array $initialStates;
 
     /**
      * @var string
      */
-    protected $name;
+    protected string $state;
 
     /**
-     * @var callable
+     * @var string
+     */
+    protected string $name;
+
+    /**
+     * @var callable|null
      */
     protected $guard;
 
     /**
      * @var OptionsResolver
      */
-    protected $propertiesOptionsResolver;
+    protected OptionsResolver $propertiesOptionsResolver;
 
     /**
-     * @param string          $name
-     * @param string|array    $initialStates
-     * @param string          $state
-     * @param callable|null   $guard
-     * @param OptionsResolver $propertiesOptionsResolver
+     * @param string               $name
+     * @param string|array         $initialStates
+     * @param string               $state
+     * @param callable|null         $guard
+     * @param OptionsResolver|null $propertiesOptionsResolver
      */
     public function __construct(
-        $name,
+        string $name,
         $initialStates,
-        $state,
-        $guard = null,
+        string $state,
+        ?callable $guard = null,
         OptionsResolver $propertiesOptionsResolver = null
     ) {
         if (null !== $guard && !is_callable($guard)) {
@@ -68,9 +68,6 @@ class Transition implements PropertiesAwareTransitionInterface
         $this->propertiesOptionsResolver = $propertiesOptionsResolver ?: new OptionsResolver();
     }
 
-    /**
-     * @param string|StateInterface $state
-     */
     public function addInitialState($state)
     {
         if ($state instanceof StateInterface) {
@@ -80,49 +77,31 @@ class Transition implements PropertiesAwareTransitionInterface
         $this->initialStates[] = $state;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInitialStates()
+    public function getInitialStates(): array
     {
         return $this->initialStates;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getState()
+    public function getState():string
     {
         return $this->state;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(StateMachineInterface $stateMachine)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName():string
     {
         return $this->name;
     }
 
-    /**
-     * @return callable|null
-     */
-    public function getGuard()
+    public function getGuard(): ?callable
     {
         return $this->guard;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function resolveProperties(array $properties)
+    public function resolveProperties(array $properties): array
     {
         try {
             return $this->propertiesOptionsResolver->resolve($properties);
@@ -141,17 +120,11 @@ class Transition implements PropertiesAwareTransitionInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function has($property)
+    public function has($property): bool
     {
         return array_key_exists($property, $this->getProperties());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function get($property, $default = null)
     {
         $properties = $this->getProperties();
@@ -159,10 +132,7 @@ class Transition implements PropertiesAwareTransitionInterface
         return $this->has($property) ? $properties[$property] : $default;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getProperties()
+    public function getProperties(): array
     {
         $missingOptions = $this->propertiesOptionsResolver->getMissingOptions();
 
@@ -178,10 +148,7 @@ class Transition implements PropertiesAwareTransitionInterface
         );
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

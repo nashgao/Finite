@@ -23,12 +23,12 @@ class CallbackHandler
     /**
      * @var StateMachineDispatcher
      */
-    protected $dispatcher;
+    protected StateMachineDispatcher $dispatcher;
 
     /**
      * @var OptionsResolver
      */
-    protected $specResolver;
+    protected OptionsResolver $specResolver;
 
     /**
      * @param StateMachineDispatcher $dispatcher
@@ -60,12 +60,12 @@ class CallbackHandler
 
     /**
      * @param StateMachineInterface|Callback $smOrCallback
-     * @param callable                       $callback
+     * @param callable|null                  $callback
      * @param array                          $spec
      *
      * @return CallbackHandler
      */
-    public function addBefore($smOrCallback, $callback = null, array $spec = array())
+    public function addBefore($smOrCallback, callable $callback = null, array $spec = array()): CallbackHandler
     {
         $this->add($smOrCallback, FiniteEvents::PRE_TRANSITION, $callback, $spec);
 
@@ -79,7 +79,7 @@ class CallbackHandler
      *
      * @return CallbackHandler
      */
-    public function addAfter($smOrCallback, $callback = null, array $spec = array())
+    public function addAfter($smOrCallback, $callback = null, array $spec = array()): CallbackHandler
     {
         $this->add($smOrCallback, FiniteEvents::POST_TRANSITION, $callback, $spec);
 
@@ -89,12 +89,12 @@ class CallbackHandler
     /**
      * @param StateMachineInterface|Callback $smOrCallback
      * @param string                         $event
-     * @param callable                       $callable
+     * @param callable|null                  $callable
      * @param array                          $specs
      *
      * @return CallbackHandler
      */
-    protected function add($smOrCallback, $event, $callable = null, array $specs = array())
+    protected function add($smOrCallback, string $event,callable $callable = null, array $specs = array()): CallbackHandler
     {
         if ($smOrCallback instanceof Callback) {
             $this->dispatcher->addListener($event, $smOrCallback);

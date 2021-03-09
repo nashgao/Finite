@@ -13,9 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ContainerCallbackPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function process(ContainerBuilder $container)
     {
         $loaders = $container->findTaggedServiceIds('finite.loader');

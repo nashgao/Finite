@@ -15,17 +15,15 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @var StateMachineInterface[]
      */
-    protected $stateMachines = array();
+    protected array $stateMachines = array();
 
     /**
      * @var LoaderInterface[]
      */
-    protected $loaders = array();
+    protected array $loaders = array();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get($object, $graph = 'default')
+
+    public function get(object $object, string $graph = 'default'): StateMachineInterface
     {
         $hash = spl_object_hash($object).'.'.$graph;
         if (!isset($this->stateMachines[$hash])) {
@@ -56,7 +54,7 @@ abstract class AbstractFactory implements FactoryInterface
      *
      * @return LoaderInterface|null
      */
-    protected function getLoader($object, $graph)
+    protected function getLoader(object $object, string $graph): ?LoaderInterface
     {
         foreach ($this->loaders as $loader) {
             if ($loader->supports($object, $graph)) {
@@ -64,7 +62,7 @@ abstract class AbstractFactory implements FactoryInterface
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -72,5 +70,5 @@ abstract class AbstractFactory implements FactoryInterface
      *
      * @return StateMachineInterface
      */
-    abstract protected function createStateMachine();
+    abstract protected function createStateMachine(): StateMachineInterface;
 }

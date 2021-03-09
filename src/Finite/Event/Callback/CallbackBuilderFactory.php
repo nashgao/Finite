@@ -11,9 +11,7 @@ use Finite\StateMachine\StateMachineInterface;
  */
 class CallbackBuilderFactory implements CallbackBuilderFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function createBuilder(StateMachineInterface $stateMachine)
     {
         return CallbackBuilder::create($stateMachine);

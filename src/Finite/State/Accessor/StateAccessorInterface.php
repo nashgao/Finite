@@ -20,7 +20,7 @@ interface StateAccessorInterface
      *
      * @return string
      */
-    public function getState($object);
+    public function getState(object $object): string;
 
     /**
      * Set the state of the object to the given property path.
@@ -30,5 +30,5 @@ interface StateAccessorInterface
      *
      * @throws NoSuchPropertyException
      */
-    public function setState(&$object, $value);
+    public function setState(object &$object, string $value);
 }

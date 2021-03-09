@@ -16,12 +16,12 @@ class CallbackSpecification implements CallbackSpecificationInterface
     /**
      * @var array
      */
-    private $specs = array();
+    private array $specs = array();
 
     /**
      * @var StateMachineInterface
      */
-    private $stateMachine;
+    private StateMachineInterface $stateMachine;
 
     /**
      * @param StateMachineInterface $sm
@@ -51,10 +51,8 @@ class CallbackSpecification implements CallbackSpecificationInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isSatisfiedBy(TransitionEvent $event)
+
+    public function isSatisfiedBy(TransitionEvent $event): bool
     {
         return
             $event->getStateMachine() === $this->stateMachine &&
@@ -69,7 +67,7 @@ class CallbackSpecification implements CallbackSpecificationInterface
      *
      * @return bool
      */
-    private function supportsClause($clause, $property)
+    private function supportsClause(string $clause, string $property): bool
     {
         $excludedClause = 'excluded_'.$clause;
 

@@ -19,5 +19,5 @@ interface FactoryInterface
      *
      * @return StateMachineInterface
      */
-    public function get($object, $graph = 'default');
+    public function get(object $object, string $graph = 'default'): StateMachineInterface;
 }

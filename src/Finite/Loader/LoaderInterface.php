@@ -26,5 +26,5 @@ interface LoaderInterface
      *
      * @return bool
      */
-    public function supports($object, $graph = 'default');
+    public function supports(object $object, string $graph = 'default'): bool;
 }

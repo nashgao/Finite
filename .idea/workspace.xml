@@ -2,16 +2,112 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4314039c-2d47-4c9b-839c-f8af9b9f6148" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/examples/callbacks.php" beforeDir="false" afterPath="$PROJECT_DIR$/examples/callbacks.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/DependencyInjection/Compiler/ContainerCallbackPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/DependencyInjection/Compiler/ContainerCallbackPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/DependencyInjection/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/DependencyInjection/Configuration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/DependencyInjection/FiniteFiniteExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/DependencyInjection/FiniteFiniteExtension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/FiniteFiniteBundle.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Bundle/FiniteBundle/FiniteFiniteBundle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Context.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Context.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Event/Callback/Callback.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Event/Callback/Callback.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Event/Callback/CallbackBuilderFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Event/Callback/CallbackBuilderFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Event/Callback/CallbackSpecification.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Event/Callback/CallbackSpecification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Extension/Twig/FiniteExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Extension/Twig/FiniteExtension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Factory/AbstractFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Factory/AbstractFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Factory/FactoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Factory/FactoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Factory/PimpleFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Factory/PimpleFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Factory/SymfonyDependencyInjectionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Factory/SymfonyDependencyInjectionFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Loader/ArrayLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Loader/ArrayLoader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Loader/LoaderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Loader/LoaderInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/PropertiesAwareInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/PropertiesAwareInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/State/Accessor/PropertyPathStateAccessor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/State/Accessor/PropertyPathStateAccessor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/State/Accessor/StateAccessorInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/State/Accessor/StateAccessorInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/State/State.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/State/State.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/State/StateInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/State/StateInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/StateMachine/SecurityAwareStateMachine.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/StateMachine/SecurityAwareStateMachine.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/StateMachine/StateMachine.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/StateMachine/StateMachine.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/StateMachine/StateMachineInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/StateMachine/StateMachineInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/StatefulInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/StatefulInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Transition/PropertiesAwareTransitionInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Transition/PropertiesAwareTransitionInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Transition/Transition.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Transition/Transition.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Finite/Transition/TransitionInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Finite/Transition/TransitionInterface.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/pimple/pimple" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit-mock-objects" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+    </include_path>
   </component>
   <component name="ProjectId" id="1pVF6up3MXkD5au8EdGD5jd8XbR" />
   <component name="ProjectViewState">
@@ -22,7 +118,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+  </component>
+  <component name="RunManager">
+    <configuration name="phpunit.xml.dist" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner scope="XML" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -33,6 +135,7 @@
       <option name="presentableId" value="Default" />
       <updated>1615260178316</updated>
       <workItem from="1615260180036" duration="207000" />
+      <workItem from="1615261982494" duration="1208000" />
     </task>
     <servers />
   </component>

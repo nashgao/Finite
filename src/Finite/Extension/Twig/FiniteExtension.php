@@ -29,9 +29,7 @@ class FiniteExtension extends \Twig_Extension
         $this->context = $context;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function getFunctions()
     {
         if (class_exists('Twig_SimpleFunction')) {
@@ -111,9 +109,7 @@ class FiniteExtension extends \Twig_Extension
         return $this->context->getStateMachine($object, $graph)->can($transition);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function getName()
     {
         return 'finite';

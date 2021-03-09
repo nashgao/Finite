@@ -83,14 +83,9 @@ class StateMachine implements StateMachineInterface
      * @throws Exception\ObjectException
      * @throws Exception\StateException
      * @throws Exception\NoSuchPropertyException
-     * @throws Exception\TransitionException
      */
     public function initialize()
     {
-        if (null === $this->object) {
-            throw new Exception\ObjectException('No object bound to the State Machine');
-        }
-
         try {
             $initialState = $this->stateAccessor->getState($this->object);
         } catch (Exception\NoSuchPropertyException $e) {
@@ -173,7 +168,6 @@ class StateMachine implements StateMachineInterface
         $this->states[$state->getName()] = $state;
     }
 
-
     public function addTransition($transition, $initialState = null, $finalState = null)
     {
         if ((null === $initialState || null === $finalState) && !$transition instanceof TransitionInterface) {
@@ -228,6 +222,8 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
+     * @param string $name
+     * @return StateInterface
      * @throws Exception\StateException
      */
     public function getState(string $name): StateInterface
@@ -324,7 +320,7 @@ class StateMachine implements StateMachineInterface
         return null !== $this->stateAccessor;
     }
 
-    public function setGraph($graph)
+    public function setGraph(string $graph)
     {
         $this->graph = $graph;
     }
