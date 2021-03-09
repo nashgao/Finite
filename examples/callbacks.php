@@ -93,6 +93,7 @@ try {
 } catch (\Throwable $throwable) {
     var_dump($throwable->getMessage());
 }
+
 $stateMachine->apply('reject');
 $stateMachine->apply('propose');
 $stateMachine->apply('accept');

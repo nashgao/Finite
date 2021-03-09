@@ -1,5 +1,5 @@
 {
-    "name":        "yohang/finite",
+    "name":        "nashgao/finite",
     "description": "A simple PHP Finite State Machine",
     "keywords":    ["statemachine", "workflow", "state", "transition", "symfony", "bundle"],
     "homepage":    "https://github.com/yohang/Finite",
