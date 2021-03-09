@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\StateMachine;
 
 use Finite\State\State;
@@ -7,7 +9,8 @@ use Finite\StateMachine\StateMachine;
 use Finite\Test\StateMachineTestCase;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class StateMachineTest extends StateMachineTestCase
 {
@@ -33,9 +36,9 @@ class StateMachineTest extends StateMachineTestCase
 
         $transitionMock = $this->createMock('Finite\Transition\TransitionInterface');
 
-        $transitionMock->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t23'));
-        $transitionMock->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state2')));
-        $transitionMock->expects($this->atLeastOnce())->method('getState')        ->will($this->returnValue('state3'));
+        $transitionMock->expects($this->atLeastOnce())->method('getName')->will($this->returnValue('t23'));
+        $transitionMock->expects($this->once())->method('getInitialStates')->will($this->returnValue(['state2']));
+        $transitionMock->expects($this->atLeastOnce())->method('getState')->will($this->returnValue('state3'));
 
         $this->object->addTransition($transitionMock);
         $this->assertInstanceOf('Finite\Transition\TransitionInterface', $this->object->getTransition('t23'));
@@ -88,8 +91,8 @@ class StateMachineTest extends StateMachineTestCase
                 return false;
             }));
 
-        $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
-        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
+        $transition->expects($this->atLeastOnce())->method('getName')->will($this->returnValue('t'));
+        $transition->expects($this->once())->method('getInitialStates')->will($this->returnValue(['state1']));
         $this->object->addTransition($transition);
         $this->assertFalse($this->object->can($transition));
     }
@@ -108,8 +111,8 @@ class StateMachineTest extends StateMachineTestCase
 
         $this->object->setObject($stateful);
         $this->object->initialize();
-        $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
-        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
+        $transition->expects($this->atLeastOnce())->method('getName')->will($this->returnValue('t'));
+        $transition->expects($this->once())->method('getInitialStates')->will($this->returnValue(['state1']));
         $this->object->addTransition($transition);
 
         $this->assertTrue($this->object->can($transition));
@@ -160,32 +163,31 @@ class StateMachineTest extends StateMachineTestCase
     {
         $this->initialize();
 
-        $this->assertSame(array('s1', 's2', 's3', 's4', 's5'), $this->object->getStates());
+        $this->assertSame(['s1', 's2', 's3', 's4', 's5'], $this->object->getStates());
     }
 
     public function testGetTransitions()
     {
         $this->initialize();
 
-        $this->assertSame(array('t12', 't23', 't34', 't45'), $this->object->getTransitions());
+        $this->assertSame(['t12', 't23', 't34', 't45'], $this->object->getTransitions());
     }
 
     public function testGetStateFromObject()
     {
         $this->initialize();
 
-        $state = $this->createMock(Stringable::class, array('__toString'));
+        $state = $this->createMock(Stringable::class, ['__toString']);
         $state->expects($this->once())->method('__toString')->will($this->returnValue('s1'));
 
         $this->assertInstanceOf('Finite\State\State', $this->object->getState($state));
     }
 
     /**
-     * Test events with a named statemachine
+     * Test events with a named statemachine.
      */
     public function testApplyWithGraph()
     {
-
         $this->dispatcher
             ->expects($this->at(1))
             ->method('dispatch')
@@ -241,13 +243,13 @@ class StateMachineTest extends StateMachineTestCase
     public function testItFindsStatesByPropertyName()
     {
         $this->initialize();
-        $this->assertSame(array('s2', 's4', 's5'), $this->object->findStateWithProperty('visible'));
+        $this->assertSame(['s2', 's4', 's5'], $this->object->findStateWithProperty('visible'));
     }
 
     public function testItFindsStatesByPropertyValue()
     {
         $this->initialize();
-        $this->assertSame(array('s2', 's4'), $this->object->findStateWithProperty('visible', true));
+        $this->assertSame(['s2', 's4'], $this->object->findStateWithProperty('visible', true));
     }
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Event;
 
 use Finite\Event\Callback\Callback;
@@ -10,8 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Manage callback-to-event bindings by trigger spec definition.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class CallbackHandler
 {
@@ -20,34 +20,25 @@ class CallbackHandler
      */
     const ALL = 'all';
 
-    /**
-     * @var StateMachineDispatcher
-     */
     protected StateMachineDispatcher $dispatcher;
 
-    /**
-     * @var OptionsResolver
-     */
     protected OptionsResolver $specResolver;
 
-    /**
-     * @param StateMachineDispatcher $dispatcher
-     */
     public function __construct(StateMachineDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
         $this->specResolver = new OptionsResolver();
         $this->specResolver->setDefaults(
-            array(
+            [
                 'on' => self::ALL,
                 'from' => self::ALL,
                 'to' => self::ALL,
-            )
+            ]
         );
 
-        $this->specResolver->setAllowedTypes('on', array('string', 'array'));
-        $this->specResolver->setAllowedTypes('from', array('string', 'array'));
-        $this->specResolver->setAllowedTypes('to', array('string', 'array'));
+        $this->specResolver->setAllowedTypes('on', ['string', 'array']);
+        $this->specResolver->setAllowedTypes('from', ['string', 'array']);
+        $this->specResolver->setAllowedTypes('to', ['string', 'array']);
 
         $toArrayNormalizer = function (Options $options, $value) {
             return (array) $value;
@@ -59,13 +50,10 @@ class CallbackHandler
     }
 
     /**
-     * @param StateMachineInterface|Callback $smOrCallback
-     * @param callable|null                  $callback
-     * @param array                          $spec
-     *
+     * @param callback|StateMachineInterface $smOrCallback
      * @return CallbackHandler
      */
-    public function addBefore($smOrCallback, callable $callback = null, array $spec = array()): CallbackHandler
+    public function addBefore($smOrCallback, callable $callback = null, array $spec = []): CallbackHandler
     {
         $this->add($smOrCallback, FiniteEvents::PRE_TRANSITION, $callback, $spec);
 
@@ -73,13 +61,11 @@ class CallbackHandler
     }
 
     /**
-     * @param StateMachineInterface|Callback $smOrCallback
-     * @param callable                       $callback
-     * @param array                          $spec
-     *
+     * @param callback|StateMachineInterface $smOrCallback
+     * @param callable $callback
      * @return CallbackHandler
      */
-    public function addAfter($smOrCallback, $callback = null, array $spec = array()): CallbackHandler
+    public function addAfter($smOrCallback, $callback = null, array $spec = []): CallbackHandler
     {
         $this->add($smOrCallback, FiniteEvents::POST_TRANSITION, $callback, $spec);
 
@@ -87,14 +73,13 @@ class CallbackHandler
     }
 
     /**
-     * @param StateMachineInterface|Callback $smOrCallback
-     * @param string                         $event
-     * @param callable|null                  $callable
-     * @param array                          $specs
-     *
+     * @param callback|StateMachineInterface $smOrCallback
+     * @param string $event
+     * @param callable|null $callable
+     * @param array $specs
      * @return CallbackHandler
      */
-    protected function add($smOrCallback, string $event,callable $callable = null, array $specs = array()): CallbackHandler
+    protected function add($smOrCallback, string $event, callable $callable = null, array $specs = []): CallbackHandler
     {
         if ($smOrCallback instanceof Callback) {
             $this->dispatcher->addListener($event, $smOrCallback);

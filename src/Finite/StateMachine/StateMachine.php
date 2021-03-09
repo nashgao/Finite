@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\StateMachine;
 
 use Finite\Event\FiniteEvents;
@@ -16,59 +18,35 @@ use Finite\Transition\TransitionInterface;
 
 /**
  * The Finite State Machine.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class StateMachine implements StateMachineInterface
 {
     /**
      * The stateful object.
-     *
-     * @var object
      */
     protected object $object;
 
     /**
      * The available states.
-     *
-     * @var array
      */
-    protected array $states = array();
+    protected array $states = [];
 
     /**
      * The available transitions.
-     *
-     * @var array
      */
-    protected array $transitions = array();
+    protected array $transitions = [];
 
     /**
      * The current state.
-     *
-     * @var StateInterface
      */
     protected StateInterface $currentState;
 
-    /**
-     * @var StateMachineDispatcher
-     */
     protected StateMachineDispatcher $dispatcher;
 
-    /**
-     * @var StateAccessorInterface
-     */
     protected StateAccessorInterface $stateAccessor;
 
-    /**
-     * @var string
-     */
     protected string $graph;
 
-    /**
-     * @param object                        $object
-     * @param StateMachineDispatcher|null   $dispatcher
-     * @param StateAccessorInterface|null   $stateAccessor
-     */
     public function __construct(
         object $object,
         StateMachineDispatcher $dispatcher = null,
@@ -95,7 +73,7 @@ class StateMachine implements StateMachineInterface
             ), $e->getCode(), $e);
         }
 
-        if (null === $initialState) {
+        if ($initialState === null) {
             $initialState = $this->findInitialState();
             $this->stateAccessor->setState($this->object, $initialState);
 
@@ -114,11 +92,11 @@ class StateMachine implements StateMachineInterface
      * @throws Exception\TransitionException
      * @throws Exception\NoSuchPropertyException
      */
-    public function apply($transitionName, array $parameters = array())
+    public function apply($transitionName, array $parameters = [])
     {
         $transition = $this->getTransition($transitionName);
         $event = new TransitionEvent($this->getCurrentState(), $transition, $this, $parameters);
-        if (!$this->can($transition, $parameters)) {
+        if (! $this->can($transition, $parameters)) {
             throw new Exception\StateException(sprintf(
                 'The "%s" transition can not be applied to the "%s" state of object "%s" with graph "%s".',
                 $transition->getName(),
@@ -139,35 +117,31 @@ class StateMachine implements StateMachineInterface
         return $returnValue;
     }
 
-
     /**
      * @param $transition
-     * @param array $parameters
-     * @return bool
      * @throws Exception\TransitionException
      */
-    public function can($transition, array $parameters = array()): bool
+    public function can($transition, array $parameters = []): bool
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
 
-        if (null !== $transition->getGuard() && !call_user_func($transition->getGuard(), $this)) {
+        if ($transition->getGuard() !== null && ! call_user_func($transition->getGuard(), $this)) {
             return false;
         }
 
-        if (!in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
+        if (! in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
             return false;
         }
 
         $event = new TransitionEvent($this->getCurrentState(), $transition, $this, $parameters);
         $this->dispatchTransitionEvent($transition, $event, FiniteEvents::TEST_TRANSITION);
 
-        return !$event->isRejected();
+        return ! $event->isRejected();
     }
-
 
     public function addState($state)
     {
-        if (!$state instanceof StateInterface) {
+        if (! $state instanceof StateInterface) {
             $state = new State($state);
         }
 
@@ -176,14 +150,14 @@ class StateMachine implements StateMachineInterface
 
     public function addTransition($transition, $initialState = null, $finalState = null)
     {
-        if ((null === $initialState || null === $finalState) && !$transition instanceof TransitionInterface) {
+        if (($initialState === null || $finalState === null) && ! $transition instanceof TransitionInterface) {
             throw new \InvalidArgumentException(
-                'You must provide a TransitionInterface instance or the $transition, '.
+                'You must provide a TransitionInterface instance or the $transition, ' .
                 '$initialState and $finalState parameters'
             );
         }
         // If transition isn't a TransitionInterface instance, we create one from the states date
-        if (!$transition instanceof TransitionInterface) {
+        if (! $transition instanceof TransitionInterface) {
             try {
                 $transition = $this->getTransition($transition);
             } catch (Exception\TransitionException $e) {
@@ -212,10 +186,9 @@ class StateMachine implements StateMachineInterface
         }
     }
 
-
     public function getTransition(string $name): TransitionInterface
     {
-        if (!isset($this->transitions[$name])) {
+        if (! isset($this->transitions[$name])) {
             throw new Exception\TransitionException(sprintf(
                 'Unable to find a transition called "%s" on object "%s" with graph "%s".',
                 $name,
@@ -228,15 +201,13 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * @param string $name
-     * @return StateInterface
      * @throws Exception\StateException
      */
     public function getState(string $name): StateInterface
     {
         $name = (string) $name;
 
-        if (!isset($this->states[$name])) {
+        if (! isset($this->states[$name])) {
             throw new Exception\StateException(sprintf(
                 'Unable to find a state called "%s" on object "%s" with graph "%s".',
                 $name,
@@ -252,7 +223,6 @@ class StateMachine implements StateMachineInterface
     {
         return array_keys($this->transitions);
     }
-
 
     public function getStates(): array
     {
@@ -274,56 +244,24 @@ class StateMachine implements StateMachineInterface
         return $this->currentState;
     }
 
-    /**
-     * Find and return the Initial state if exists.
-     *
-     * @return string
-     *
-     * @throws Exception\StateException
-     */
-    protected function findInitialState(): string
-    {
-        foreach ($this->states as $state) {
-            if (State::TYPE_INITIAL === $state->getType()) {
-                return $state->getName();
-            }
-        }
-
-        throw new Exception\StateException(sprintf(
-            'No initial state found on object "%s" with graph "%s".',
-            $this->getObject() ? get_class($this->getObject()) : null,
-            $this->getGraph()
-        ));
-    }
-
-    /**
-     * @param StateMachineDispatcher $dispatcher
-     */
     public function setDispatcher(StateMachineDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * @return StateMachineDispatcher
-     */
     public function getDispatcher(): StateMachineDispatcher
     {
         return $this->dispatcher;
     }
 
-    /**
-     * @param StateAccessorInterface $stateAccessor
-     */
     public function setStateAccessor(StateAccessorInterface $stateAccessor)
     {
         $this->stateAccessor = $stateAccessor;
     }
 
-
     public function hasStateAccessor(): bool
     {
-        return null !== $this->stateAccessor;
+        return $this->stateAccessor !== null;
     }
 
     public function setGraph(string $graph)
@@ -346,11 +284,11 @@ class StateMachine implements StateMachineInterface
                 array_filter(
                     $this->states,
                     function (State $state) use ($property, $value) {
-                        if (!$state->has($property)) {
+                        if (! $state->has($property)) {
                             return false;
                         }
 
-                        if (null !== $value && $state->get($property) !== $value) {
+                        if ($value !== null && $state->get($property) !== $value) {
                             return false;
                         }
 
@@ -362,18 +300,34 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * Dispatches event for the transition
+     * Find and return the Initial state if exists.
      *
-     * @param TransitionInterface $transition
-     * @param TransitionEvent $event
-     * @param string $transitionState
+     * @throws Exception\StateException
+     */
+    protected function findInitialState(): string
+    {
+        foreach ($this->states as $state) {
+            if ($state->getType() === State::TYPE_INITIAL) {
+                return $state->getName();
+            }
+        }
+
+        throw new Exception\StateException(sprintf(
+            'No initial state found on object "%s" with graph "%s".',
+            $this->getObject() ? get_class($this->getObject()) : null,
+            $this->getGraph()
+        ));
+    }
+
+    /**
+     * Dispatches event for the transition.
      */
     private function dispatchTransitionEvent(TransitionInterface $transition, TransitionEvent $event, string $transitionState)
     {
         $this->dispatcher->dispatch($transitionState, $event);
-        $this->dispatcher->dispatch($transitionState.'.'.$transition->getName(), $event);
-        if (null !== $this->getGraph()) {
-            $this->dispatcher->dispatch($transitionState.'.'.$this->getGraph().'.'.$transition->getName(), $event);
+        $this->dispatcher->dispatch($transitionState . '.' . $transition->getName(), $event);
+        if ($this->getGraph() !== null) {
+            $this->dispatcher->dispatch($transitionState . '.' . $this->getGraph() . '.' . $transition->getName(), $event);
         }
     }
 }

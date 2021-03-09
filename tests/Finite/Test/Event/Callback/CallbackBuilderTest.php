@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\Event\Callback;
 
 use Finite\Event\Callback\CallbackBuilder;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class CallbackBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,14 +19,14 @@ class CallbackBuilderTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $callableMock = $this->getMockBuilder('\stdClass')->setMethods(array('call'))->getMock();
+        $callableMock = $this->getMockBuilder('\stdClass')->setMethods(['call'])->getMock();
 
-        $callback = CallbackBuilder::create($stateMachine, array($callableMock, 'call'))
-            ->setFrom(array('s1'))
+        $callback = CallbackBuilder::create($stateMachine, [$callableMock, 'call'])
+            ->setFrom(['s1'])
             ->addFrom('s2')
-            ->setTo(array('s2'))
+            ->setTo(['s2'])
             ->addTo('s3')
-            ->setOn(array('t12'))
+            ->setOn(['t12'])
             ->addOn('t23')
             ->getCallback();
 

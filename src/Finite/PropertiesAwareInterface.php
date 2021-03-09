@@ -1,23 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite;
 
 /**
- * Interface that all class that have properties must implements
- *
+ * Interface that all class that have properties must implements.
  */
 interface PropertiesAwareInterface
 {
-    /**
-     * @param string $property
-     *
-     * @return bool
-     */
     public function has(string $property): bool;
 
     /**
-     * @param string $property
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -25,8 +20,6 @@ interface PropertiesAwareInterface
 
     /**
      * Returns optional state properties.
-     *
-     * @return array
      */
-    public function getProperties():array;
+    public function getProperties(): array;
 }

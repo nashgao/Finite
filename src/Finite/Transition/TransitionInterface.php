@@ -1,43 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Transition;
 
 use Finite\StateMachine\StateMachineInterface;
 
 /**
  * The base Transition interface.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 interface TransitionInterface
 {
     /**
      * Returns the array of states that supports this transition.
-     *
-     * @return array
      */
     public function getInitialStates(): array;
 
     /**
      * Returns the state resulting of this transition.
-     *
-     * @return string
      */
     public function getState(): string;
 
     /**
      * Process the transition.
      *
-     * @param StateMachineInterface $stateMachine
-     * @param array $parameters
      * @return mixed
      */
     public function process(StateMachineInterface $stateMachine, array $parameters);
 
     /**
      * Returns the name of the transition.
-     *
-     * @return string
      */
     public function getName(): string;
 

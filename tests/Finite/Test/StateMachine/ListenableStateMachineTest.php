@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\StateMachine;
 
 use Finite\StateMachine\ListenableStateMachine;
 use Finite\Test\StateMachineTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class ListenableStateMachineTest extends StateMachineTestCase
 {
@@ -105,7 +107,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->dispatcher
             ->expects($this->at(2))
             ->method('dispatch')
-            ->with('finite.test_transition.t23', $this->callback(function($event) {
+            ->with('finite.test_transition.t23', $this->callback(function ($event) {
                 $event->reject();
                 return $event instanceof \Finite\Event\TransitionEvent;
             }));

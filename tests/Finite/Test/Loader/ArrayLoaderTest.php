@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\Loader;
 
 use Finite\Loader\ArrayLoader;
@@ -7,7 +9,8 @@ use Finite\StateMachine\StateMachine;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,24 +31,24 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->object = new ArrayLoader(
-            array(
-                'class'         => 'Stateful1',
-                'states'        => array(
-                    'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
-                    'middle' => array('type' => 'normal', 'properties' => array()),
-                    'end'    => array('type' => 'final', 'properties' => array()),
-                ),
-                'transitions'   => array(
-                    'middleize' => array(
-                        'from' => array('start'),
-                        'to'   => 'middle'
-                    ),
-                    'finish'    => array(
-                        'from' => array('middle'),
-                        'to'   => 'end'
-                    )
-                )
-            ),
+            [
+                'class' => 'Stateful1',
+                'states' => [
+                    'start' => ['type' => 'initial', 'properties' => ['foo' => true, 'bar' => false]],
+                    'middle' => ['type' => 'normal', 'properties' => []],
+                    'end' => ['type' => 'final', 'properties' => []],
+                ],
+                'transitions' => [
+                    'middleize' => [
+                        'from' => ['start'],
+                        'to' => 'middle',
+                    ],
+                    'finish' => [
+                        'from' => ['middle'],
+                        'to' => 'end',
+                    ],
+                ],
+            ],
             $this->callbackHandler
         );
     }
@@ -65,7 +68,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $sm = $this->createMock('Finite\StateMachine\StateMachine');
 
         $graphName = 'foobar';
-        $loader = new ArrayLoader(array('class' => 'Stateful1', 'graph' => $graphName), $this->callbackHandler);
+        $loader = new ArrayLoader(['class' => 'Stateful1', 'graph' => $graphName], $this->callbackHandler);
 
         $sm->expects($this->once())->method('setGraph')->with($graphName);
 
@@ -77,24 +80,24 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $sm = $this->createMock('Finite\StateMachine\StateMachine');
 
         $this->object = new ArrayLoader(
-            array(
-                'class'       => 'Stateful1',
-                'states'      => array(
-                    'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
-                    'middle' => array(),
-                    'end'    => array('type' => 'final'),
-                ),
-                'transitions' => array(
-                    'middleize' => array(
+            [
+                'class' => 'Stateful1',
+                'states' => [
+                    'start' => ['type' => 'initial', 'properties' => ['foo' => true, 'bar' => false]],
+                    'middle' => [],
+                    'end' => ['type' => 'final'],
+                ],
+                'transitions' => [
+                    'middleize' => [
                         'from' => 'start',
-                        'to'   => 'middle'
-                    ),
-                    'finish'    => array(
-                        'from' => array('middle'),
-                        'to'   => 'end'
-                    )
-                ),
-            ),
+                        'to' => 'middle',
+                    ],
+                    'finish' => [
+                        'from' => ['middle'],
+                        'to' => 'end',
+                    ],
+                ],
+            ],
             $this->callbackHandler
         );
 
@@ -105,33 +108,33 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadCallbacks()
     {
-        $sm                         = $this->createMock('Finite\StateMachine\StateMachine');
-        $allTimes                   = function () {};
-        $beforeMiddleize            = function () {};
+        $sm = $this->createMock('Finite\StateMachine\StateMachine');
+        $allTimes = function () {};
+        $beforeMiddleize = function () {};
         $fromStartToOtherThanMiddle = function () {};
 
         $this->object = new ArrayLoader(
-            array(
-                'class'       => 'Stateful1',
-                'states'      => array(
-                    'start'  => array('type' => 'initial'),
-                    'middle' => array(),
-                    'end'    => array('type' => 'final'),
-                ),
-                'transitions' => array(
-                    'middleize' => array('from' => 'start', 'to' => 'middle'),
-                    'finish'    => array('from' => array('middle'), 'to' => 'end')
-                ),
-                'callbacks'   => array(
-                    'before' => array(
-                        array('on' => 'middleize', 'do' => $beforeMiddleize),
-                        array('from' => 'start', 'to' => '-middle', 'do' => $fromStartToOtherThanMiddle)
-                    ),
-                    'after'  => array(
-                        array('do' => $allTimes)
-                    )
-                )
-            ),
+            [
+                'class' => 'Stateful1',
+                'states' => [
+                    'start' => ['type' => 'initial'],
+                    'middle' => [],
+                    'end' => ['type' => 'final'],
+                ],
+                'transitions' => [
+                    'middleize' => ['from' => 'start', 'to' => 'middle'],
+                    'finish' => ['from' => ['middle'], 'to' => 'end'],
+                ],
+                'callbacks' => [
+                    'before' => [
+                        ['on' => 'middleize', 'do' => $beforeMiddleize],
+                        ['from' => 'start', 'to' => '-middle', 'do' => $fromStartToOtherThanMiddle],
+                    ],
+                    'after' => [
+                        ['do' => $allTimes],
+                    ],
+                ],
+            ],
             $this->callbackHandler
         );
 
@@ -158,23 +161,23 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $sm = new StateMachine();
 
         $this->object = new ArrayLoader(
-            array(
-                'class'       => 'Stateful1',
-                'states'      => array(
-                    'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
-                    'end'    => array('type' => 'final'),
-                ),
-                'transitions' => array(
-                    'finish'    => array(
-                        'from' => array('middle'),
-                        'to'   => 'end',
-                        'properties' => array('default' => 'default'),
+            [
+                'class' => 'Stateful1',
+                'states' => [
+                    'start' => ['type' => 'initial', 'properties' => ['foo' => true, 'bar' => false]],
+                    'end' => ['type' => 'final'],
+                ],
+                'transitions' => [
+                    'finish' => [
+                        'from' => ['middle'],
+                        'to' => 'end',
+                        'properties' => ['default' => 'default'],
                         'configure_properties' => function (OptionsResolver $optionsResolver) {
                             $optionsResolver->setRequired('required');
                         },
-                    )
-                ),
-            ),
+                    ],
+                ],
+            ],
             $this->callbackHandler
         );
 
@@ -187,7 +190,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
             ->setMockClassName('CustomAccessor')
             ->getMock();
 
-        $sm = new StateMachine;
+        $sm = new StateMachine();
         $sm->setStateAccessor($sa);
 
         $this->object->load($sm);
@@ -207,7 +210,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->supports($object));
         $this->assertFalse($this->object->supports($object2));
 
-        $alternativeLoader = new ArrayLoader(array('class' => 'Stateful1', 'graph' => 'foobar'));
+        $alternativeLoader = new ArrayLoader(['class' => 'Stateful1', 'graph' => 'foobar']);
         $this->assertTrue($alternativeLoader->supports($object, 'foobar'));
         $this->assertFalse($alternativeLoader->supports($object));
     }

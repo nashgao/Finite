@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\StateMachine;
 
 /**
@@ -8,8 +10,6 @@ namespace Finite\StateMachine;
  * Uses the Symfony EventDispatcher Component
  *
  * @deprecated Deprecated since version 1.0.0-BETA2. Use the Basic State Machine (which is now listenable) instead.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class ListenableStateMachine extends StateMachine
 {

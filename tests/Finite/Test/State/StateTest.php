@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\State;
 
 use Finite\State\State;
 
 /**
- *
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class StateTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,6 +36,9 @@ class StateTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends      testAddTransition
      * @dataProvider testCanDataProvider
+     * @param mixed $transitions
+     * @param mixed $can
+     * @param mixed $cannot
      */
     public function testCan($transitions, $can, $cannot)
     {
@@ -48,10 +52,10 @@ class StateTest extends \PHPUnit_Framework_TestCase
 
     public function testCanDataProvider()
     {
-        return array(
-            array(array('t1', 't2', 't3'), 't3', 't4'),
-            array(array('t1', 't2'), 't2', 't3'),
-        );
+        return [
+            [['t1', 't2', 't3'], 't3', 't4'],
+            [['t1', 't2'], 't2', 't3'],
+        ];
     }
 
     /**
@@ -65,8 +69,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
 
         $transition->expects($this->once())
             ->method('getName')
-            ->will($this->returnValue($transitionName))
-        ;
+            ->will($this->returnValue($transitionName));
 
         return $transition;
     }

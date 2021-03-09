@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test;
 
 use Finite\State\State;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class StateMachineTestCase extends \PHPUnit_Framework_TestCase
 {
@@ -34,23 +37,23 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
 
     public function statesProvider()
     {
-        return array(
-            array(new State('s1', State::TYPE_INITIAL)),
-            array(new State('s2', State::TYPE_NORMAL, array(), array('visible' => true))),
-            array('s3'),
-            array(new State('s4', State::TYPE_NORMAL, array(), array('visible' => true))),
-            array(new State('s5', State::TYPE_FINAL, array(), array('visible' => false))),
-        );
+        return [
+            [new State('s1', State::TYPE_INITIAL)],
+            [new State('s2', State::TYPE_NORMAL, [], ['visible' => true])],
+            ['s3'],
+            [new State('s4', State::TYPE_NORMAL, [], ['visible' => true])],
+            [new State('s5', State::TYPE_FINAL, [], ['visible' => false])],
+        ];
     }
 
     public function transitionsProvider()
     {
-        return array(
-            array('t12', 's1', 's2'),
-            array('t23', 's2', 's3'),
-            array('t34', 's3', 's4'),
-            array('t45', 's4', 's5'),
-        );
+        return [
+            ['t12', 's1', 's2'],
+            ['t23', 's2', 's3'],
+            ['t34', 's3', 's4'],
+            ['t45', 's4', 's5'],
+        ];
     }
 
     protected function addStates()

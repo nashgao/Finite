@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\State\Accessor;
 
 use Finite\State\Accessor\PropertyPathStateAccessor;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -19,7 +25,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetState()
     {
-        $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
+        $object = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
@@ -42,7 +48,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
 
     public function testSetState()
     {
-        $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
+        $object = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
@@ -68,15 +74,14 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetOnUnknownProperty()
     {
-        $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
+        $object = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
             ->expects($this->once())
             ->method('setValue')
             ->with($stateful, 'bar', 'foo')
-            ->will($this->throwException(new NoSuchPropertyException));
-
+            ->will($this->throwException(new NoSuchPropertyException()));
 
         $object->setState($stateful, 'foo');
     }
@@ -86,15 +91,14 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetOnUnknownProperty()
     {
-        $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
+        $object = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
             ->expects($this->once())
             ->method('getValue')
             ->with($stateful, 'bar')
-            ->will($this->throwException(new NoSuchPropertyException));
-
+            ->will($this->throwException(new NoSuchPropertyException()));
 
         $object->getState($stateful);
     }

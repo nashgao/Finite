@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\State;
 
 use Finite\Transition\TransitionInterface;
@@ -7,39 +9,27 @@ use Finite\Transition\TransitionInterface;
 /**
  * The base State class.
  * Feel free to extend it to fit to your needs.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
- * @author Michal Dabrowski <dabrowski@brillante.pl>
  */
 class State implements StateInterface
 {
     /**
      * The state type.
-     *
-     * @var string
      */
     protected string $type;
 
     /**
      * The transition name.
-     *
-     * @var array
      */
     protected array $transitions;
 
     /**
      * The state name.
-     *
-     * @var string
      */
     protected string $name;
 
-    /**
-     * @var array
-     */
     protected array $properties;
 
-    public function __construct(string $name, $type = self::TYPE_NORMAL, array $transitions = array(), array $properties = array())
+    public function __construct(string $name, $type = self::TYPE_NORMAL, array $transitions = [], array $properties = [])
     {
         $this->name = $name;
         $this->type = $type;
@@ -47,24 +37,25 @@ class State implements StateInterface
         $this->properties = $properties;
     }
 
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 
     public function isInitial(): bool
     {
-        return self::TYPE_INITIAL === $this->type;
+        return $this->type === self::TYPE_INITIAL;
     }
-
 
     public function isFinal(): bool
     {
-        return self::TYPE_FINAL === $this->type;
+        return $this->type === self::TYPE_FINAL;
     }
-
 
     public function isNormal(): bool
     {
-        return self::TYPE_NORMAL === $this->type;
+        return $this->type === self::TYPE_NORMAL;
     }
-
 
     public function getType(): string
     {
@@ -72,7 +63,7 @@ class State implements StateInterface
     }
 
     /**
-     * @param TransitionInterface|string $transition
+     * @param string|TransitionInterface $transition
      */
     public function addTransition($transition)
     {
@@ -132,10 +123,5 @@ class State implements StateInterface
     public function setProperties(array $properties)
     {
         $this->properties = $properties;
-    }
-
-    public function __toString(): string
-    {
-        return $this->getName();
     }
 }

@@ -27,23 +27,26 @@
         "pimple/pimple":                "^1.1.1",
         "symfony/dependency-injection": "^2.8|^3.0|^4.0|^5.0",
         "symfony/framework-bundle":     "^2.8|^3.0|^4.0|^5.0",
-        "symfony/security-bundle":      "^2.8|^3.0|^4.0|^5.0"
-
+        "symfony/security-bundle":      "^2.8|^3.0|^4.0|^5.0",
+        "friendsofphp/php-cs-fixer": "^v2.1.04"
     },
     "suggest": {
         "symfony/security": "Needed for using SecurityAwareStateMachine"
     },
     "autoload": {
         "psr-4": {
-            "Finite\\": "src/"
+            "Finite\\": "src/Finite"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Finite\\Test\\": "tests/Finite/Test"
         }
     },
     "config": {
         "bin-dir":"bin"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.1.x-dev"
-        }
+    "scripts": {
+        "cs-fix": "php-cs-fixer fix $1"
     }
 }

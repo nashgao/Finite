@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\StateMachine;
 
 use Finite\Exception\TransitionException;
@@ -11,35 +13,25 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  * Use the Symfony Security Component and ACL.
  *
  * Need an ACL implementation available, Doctrine DBAL by default.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class SecurityAwareStateMachine extends StateMachine
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
     protected AuthorizationCheckerInterface$authorizationChecker;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
     public function setSecurityContext(AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
-     * @param TransitionInterface|string $transition
-     * @param array $parameters
-     * @return bool
+     * @param string|TransitionInterface $transition
      * @throws TransitionException
      */
-    public function can($transition, array $parameters = array()): bool
+    public function can($transition, array $parameters = []): bool
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
 
-        if (!$this->authorizationChecker->isGranted($transition->getName(), $this->getObject())) {
+        if (! $this->authorizationChecker->isGranted($transition->getName(), $this->getObject())) {
             return false;
         }
 

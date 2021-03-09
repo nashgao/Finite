@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\Event;
 
 use Finite\Event\Callback\Callback;
@@ -9,7 +11,8 @@ use Finite\Event\FiniteEvents;
 use Finite\Event\TransitionEvent;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,9 +33,9 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->dispatcher   = $this->createMock('Finite\Event\StateMachineDispatcher');
+        $this->dispatcher = $this->createMock('Finite\Event\StateMachineDispatcher');
         $this->statemachine = $this->createMock('Finite\StateMachine\StateMachineInterface');
-        $this->object       = new CallbackHandler($this->dispatcher);
+        $this->object = new CallbackHandler($this->dispatcher);
     }
 
     public function testItAttachsAllPreTransition()
@@ -43,7 +46,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(FiniteEvents::PRE_TRANSITION, $this->isInstanceOf('Finite\Event\Callback\Callback'));
 
         $this->object->addBefore(
-            CallbackBuilder::create($this->statemachine)->setCallable(function() {})->getCallback()
+            CallbackBuilder::create($this->statemachine)->setCallable(function () {})->getCallback()
         );
     }
 
@@ -56,7 +59,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->object->addBefore(
             CallbackBuilder::create($this->statemachine)
-                ->setCallable(function() {})
+                ->setCallable(function () {})
                 ->addOn('t12')
                 ->getCallback()
         );
@@ -64,12 +67,12 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testItAttachsPreTransitionWithToSpec()
     {
-        $transitionOk    = $this->createMock('Finite\Transition\TransitionInterface');
+        $transitionOk = $this->createMock('Finite\Transition\TransitionInterface');
         $transitionNotOk = $this->createMock('Finite\Transition\TransitionInterface');
-        $state           = $this->createMock('Finite\State\StateInterface');
-        $e1              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $e2              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $stateful        = $this->createMock('Finite\StatefulInterface');
+        $state = $this->createMock('Finite\State\StateInterface');
+        $e1 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $e2 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
@@ -88,7 +91,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
                     $this->isInstanceOf('Finite\Event\Callback\Callback'),
-                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->callback(function (Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
@@ -97,7 +100,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             CallbackBuilder::create($this->statemachine)
                 ->addTo('foobar')
                 ->setCallable(
-                    function($object, TransitionEvent $event) use ($that, $stateful) {
+                    function ($object, TransitionEvent $event) use ($that) {
                         $that->assertSame('foobar', $event->getTransition()->getState());
                     }
                 )
@@ -107,12 +110,12 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testItAttachsPreTransitionWithFromSpec()
     {
-        $e1              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $e2              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $stateOk         = $this->createMock('Finite\State\StateInterface');
-        $stateNotOk      = $this->createMock('Finite\State\StateInterface');
-        $transition      = $this->createMock('Finite\Transition\TransitionInterface');
-        $stateful        = $this->createMock('Finite\StatefulInterface');
+        $e1 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $e2 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $stateOk = $this->createMock('Finite\State\StateInterface');
+        $stateNotOk = $this->createMock('Finite\State\StateInterface');
+        $transition = $this->createMock('Finite\Transition\TransitionInterface');
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
@@ -131,7 +134,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
                     $this->isInstanceOf('Finite\Event\Callback\Callback'),
-                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->callback(function (Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
@@ -140,7 +143,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             CallbackBuilder::create($this->statemachine)
                 ->addFrom('foobar')
                 ->setCallable(
-                    function($object, TransitionEvent $event) use ($that, $stateful) {
+                    function ($object, TransitionEvent $event) use ($that) {
                         $that->assertSame('foobar', $event->getInitialState()->getName());
                     }
                 )
@@ -150,12 +153,12 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testItAttachsPreTransitionWithExcludeFromSpec()
     {
-        $e1              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $e2              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $stateOk         = $this->createMock('Finite\State\StateInterface');
-        $stateNotOk      = $this->createMock('Finite\State\StateInterface');
-        $transition      = $this->createMock('Finite\Transition\TransitionInterface');
-        $stateful        = $this->createMock('Finite\StatefulInterface');
+        $e1 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $e2 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $stateOk = $this->createMock('Finite\State\StateInterface');
+        $stateNotOk = $this->createMock('Finite\State\StateInterface');
+        $transition = $this->createMock('Finite\Transition\TransitionInterface');
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
@@ -174,16 +177,16 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
                     $this->isInstanceOf('Finite\Event\Callback\Callback'),
-                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->callback(function (Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
-        $that = $this;;
+        $that = $this;
         $this->object->addBefore(
             CallbackBuilder::create($this->statemachine)
                 ->addFrom('-bazqux')
                 ->setCallable(
-                    function ($object, TransitionEvent $event) use ($that, $stateful) {
+                    function ($object, TransitionEvent $event) use ($that) {
                         $that->assertSame('foobar', $event->getInitialState()->getName());
                     }
                 )
@@ -193,12 +196,12 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testItAttachsPreTransitionWithExcludeToSpec()
     {
-        $transitionOk    = $this->createMock('Finite\Transition\TransitionInterface');
+        $transitionOk = $this->createMock('Finite\Transition\TransitionInterface');
         $transitionNotOk = $this->createMock('Finite\Transition\TransitionInterface');
-        $state           = $this->createMock('Finite\State\StateInterface');
-        $e1              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $e2              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-        $stateful        = $this->createMock('Finite\StatefulInterface');
+        $state = $this->createMock('Finite\State\StateInterface');
+        $e1 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $e2 = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
@@ -217,7 +220,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
                     $this->isInstanceOf('Finite\Event\Callback\Callback'),
-                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->callback(function (Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
@@ -226,7 +229,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             CallbackBuilder::create($this->statemachine)
                 ->addTo('-bazqux')
                 ->setCallable(
-                    function($object, TransitionEvent $event) use ($that, $stateful) {
+                    function ($object, TransitionEvent $event) use ($that, $stateful) {
                         $that->assertSame($object, $stateful);
                         $that->assertSame('foobar', $event->getTransition()->getState());
                     }

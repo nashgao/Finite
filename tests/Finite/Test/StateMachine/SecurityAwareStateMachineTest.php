@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\StateMachine;
 
 use Finite\StateMachine\SecurityAwareStateMachine;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,6 +16,7 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
      * @var SecurityAwareStateMachine
      */
     protected $object;
+
     protected $accessor;
 
     public function setUp()
@@ -32,9 +36,9 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
         $securityMock = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->object->setSecurityContext($securityMock);
 
-        $that     = $this;
+        $that = $this;
         $stateful = $this->object->getObject();
-        $addIsGrandedExpectation = function($return, $transition) use ($that, $securityMock, $stateful) {
+        $addIsGrandedExpectation = function ($return, $transition) use ($that, $securityMock, $stateful) {
             static $at = 0;
 
             $securityMock
@@ -54,5 +58,4 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->can('t12'));
         $this->assertFalse($this->object->can('t23'));
     }
-
 }

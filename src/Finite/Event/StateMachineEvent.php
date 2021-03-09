@@ -1,37 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Event;
 
 use Finite\StateMachine\StateMachine;
 use Symfony\Contracts\EventDispatcher\Event;
 
-if (!class_exists('Symfony\Contracts\EventDispatcher\Event')) {
+if (! class_exists('Symfony\Contracts\EventDispatcher\Event')) {
     class_alias('Symfony\Component\EventDispatcher\Event', 'Symfony\Contracts\EventDispatcher\Event');
 }
 
 /**
  * The event object which is thrown on state machine actions.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class StateMachineEvent extends Event
 {
-    /**
-     * @var StateMachine
-     */
     protected StateMachine $stateMachine;
 
-    /**
-     * @param StateMachine $stateMachine
-     */
     public function __construct(StateMachine $stateMachine)
     {
         $this->stateMachine = $stateMachine;
     }
 
-    /**
-     * @return StateMachine
-     */
     public function getStateMachine(): StateMachine
     {
         return $this->stateMachine;

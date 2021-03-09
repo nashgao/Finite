@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Event;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -7,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * This class is here to provide a compatibility layer between symfony
- * versions from 2.8 to ^5.0
+ * versions from 2.8 to ^5.0.
  */
 class StateMachineDispatcher
 {
@@ -18,7 +20,7 @@ class StateMachineDispatcher
 
     public function __construct(EventDispatcherInterface $eventDispatcher = null)
     {
-        $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher;
+        $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
     }
 
     public function dispatch($eventName, StateMachineEvent $event): object
@@ -39,10 +41,10 @@ class StateMachineDispatcher
     {
         static $result = null;
 
-        if (null === $result) {
-            $reflectionMethod     = new \ReflectionMethod(EventDispatcherInterface::class, 'dispatch');
+        if ($result === null) {
+            $reflectionMethod = new \ReflectionMethod(EventDispatcherInterface::class, 'dispatch');
             $reflectionParameters = $reflectionMethod->getParameters();
-            $result               = count($reflectionParameters) >= 2 && 'event' === $reflectionParameters[1]->getName();
+            $result = count($reflectionParameters) >= 2 && $reflectionParameters[1]->getName() === 'event';
         }
 
         return $result;

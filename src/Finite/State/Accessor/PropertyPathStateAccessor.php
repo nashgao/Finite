@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\State\Accessor;
 
 use Finite\Exception\NoSuchPropertyException;
@@ -9,31 +11,21 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * Property path implementation of state accessor.
- *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class PropertyPathStateAccessor implements StateAccessorInterface
 {
-    /**
-     * @var string
-     */
     private string $propertyPath;
 
-    /**
-     * @var PropertyAccessorInterface
-     */
     private PropertyAccessorInterface $propertyAccessor;
 
     /**
-     * @param string                         $propertyPath
-     * @param PropertyAccessorInterface|null $propertyAccessor
+     * @param string $propertyPath
      */
     public function __construct($propertyPath = 'finiteState', PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->propertyPath = $propertyPath;
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
-
 
     public function getState($object): ?string
     {
@@ -47,7 +39,6 @@ class PropertyPathStateAccessor implements StateAccessorInterface
             ), $e->getCode(), $e);
         }
     }
-
 
     public function setState(object &$object, string $value)
     {

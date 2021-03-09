@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Test\Event\Callback;
 
 use Finite\Event\Callback\CallbackBuilderFactory;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @internal
+ * @coversNothing
  */
 class CallbackBuilderFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +16,7 @@ class CallbackBuilderFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $sm = $this->createMock('Finite\StateMachine\StateMachineInterface');
 
-        $factory = new CallbackBuilderFactory;
+        $factory = new CallbackBuilderFactory();
 
         $this->assertInstanceOf('Finite\Event\Callback\CallbackBuilder', $builder = $factory->createBuilder($sm));
         $this->assertNotSame($builder, $factory->createBuilder($sm));
