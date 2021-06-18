@@ -33,14 +33,14 @@ interface StateInterface extends PropertiesAwareInterface
      *
      * @return mixed
      */
-    public function isFinal();
+    public function isFinal(): bool;
 
     /**
      * Returns if this state is a normal state (!($this->isInitial() || $this->isFinal()).
      *
      * @return mixed
      */
-    public function isNormal();
+    public function isNormal(): bool;
 
     /**
      * Returns the state type.
@@ -51,13 +51,4 @@ interface StateInterface extends PropertiesAwareInterface
      * Returns the available transitions.
      */
     public function getTransitions(): array;
-
-    /**
-     * Returns if this state can run $transition.
-     *
-     * @param string|TransitionInterface $transition
-     *
-     * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
-     */
-    public function can($transition): bool;
 }

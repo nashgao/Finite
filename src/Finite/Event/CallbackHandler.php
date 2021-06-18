@@ -15,11 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CallbackHandler
 {
-    /**
-     * @deprecated To be removed in 2.0
-     */
-    const ALL = 'all';
-
     protected StateMachineDispatcher $dispatcher;
 
     protected OptionsResolver $specResolver;
@@ -28,14 +23,6 @@ class CallbackHandler
     {
         $this->dispatcher = $dispatcher;
         $this->specResolver = new OptionsResolver();
-        $this->specResolver->setDefaults(
-            [
-                'on' => self::ALL,
-                'from' => self::ALL,
-                'to' => self::ALL,
-            ]
-        );
-
         $this->specResolver->setAllowedTypes('on', ['string', 'array']);
         $this->specResolver->setAllowedTypes('from', ['string', 'array']);
         $this->specResolver->setAllowedTypes('to', ['string', 'array']);

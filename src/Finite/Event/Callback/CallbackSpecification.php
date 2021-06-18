@@ -30,12 +30,6 @@ class CallbackSpecification implements CallbackSpecificationInterface
             $this->specs[$excludedClause] = array_filter(${$clause}, $isExclusion);
             $this->specs[$clause] = array_diff(${$clause}, $this->specs[$excludedClause]);
             $this->specs[$excludedClause] = array_map($removeDash, $this->specs[$excludedClause]);
-
-            // For compatibility with old CallbackHandler.
-            // To be removed in 2.0
-            if (in_array(CallbackHandler::ALL, $this->specs[$clause])) {
-                $this->specs[$clause] = [];
-            }
         }
     }
 

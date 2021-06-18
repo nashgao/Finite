@@ -33,23 +33,6 @@ class StateTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('transition-3', $this->object->getTransitions());
     }
 
-    /**
-     * @depends      testAddTransition
-     * @dataProvider testCanDataProvider
-     * @param mixed $transitions
-     * @param mixed $can
-     * @param mixed $cannot
-     */
-    public function testCan($transitions, $can, $cannot)
-    {
-        foreach ($transitions as $transition) {
-            $this->object->addTransition($transition);
-        }
-
-        $this->assertTrue($this->object->can($can));
-        $this->assertFalse($this->object->can($cannot));
-    }
-
     public function testCanDataProvider()
     {
         return [

@@ -20,14 +20,15 @@ class PropertyPathStateAccessor implements StateAccessorInterface
 
     /**
      * @param string $propertyPath
+     * @param PropertyAccessorInterface|null $propertyAccessor
      */
-    public function __construct($propertyPath = 'finiteState', PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(string $propertyPath = 'finiteState', PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->propertyPath = $propertyPath;
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
-    public function getState($object): ?string
+    public function getState(object $object): ?string
     {
         try {
             return $this->propertyAccessor->getValue($object, $this->propertyPath);

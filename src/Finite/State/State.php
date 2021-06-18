@@ -86,20 +86,6 @@ class State implements StateInterface
         return $this->transitions;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
-     */
-    public function can($transition): bool
-    {
-        if ($transition instanceof TransitionInterface) {
-            $transition = $transition->getName();
-        }
-
-        return in_array($transition, $this->transitions);
-    }
-
     public function has($property): bool
     {
         return array_key_exists($property, $this->properties);
